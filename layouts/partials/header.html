@@ -1,24 +1,34 @@
 {{ $curLanguageName := .Site.Language.LanguageName }}
 <header>
   <div class="header-title">
-    <a href="{{ .Site.LanguagePrefix }}/"
-      >{{ or .Site.Params.headTitle .Site.Params.author.name }}</a
-    >
+    <a href="{{ .Site.LanguagePrefix }}/">{{ or .Site.Params.headTitle .Site.Params.author.name }}</a>
   </div>
   <div class="header-subtitle">{{ .Site.Params.Description }}</div>
 </header>
 <div class="row end-md header-items">
-  <div class="header-item-left">
-    <button id="theme-toggle" onclick="toggleTheme()" class="theme-toggle">
-      🌙
-    </button>
+  <div class="header-item">
+    <a href="/posts/">Posts</a>
   </div>
-
-  {{ range .Site.Params.socials }}
+  <div class="header-item">
+    <a href="/weekly/">Weekly</a>
+  </div>
+  {{ range .Site.Params.socials -}}
   <div class="header-item">
     <a href="{{ .link }}" target="_blank">{{ .name }}</a>
   </div>
   {{ end }}
+
+  <div class="header-item">
+    <button
+      id="theme-toggle"
+      type="button"
+      onclick="toggleTheme()"
+      class="theme-toggle"
+      aria-label="Toggle theme"
+      title="Toggle theme">
+      ◐
+    </button>
+  </div>
 </div>
 <div class="row">
   {{ range .Site.Languages -}} {{ if ne .LanguageName $curLanguageName }}
