@@ -1,9 +1,15 @@
+{{ $prevPage := .PrevInSection }}
+{{ $nextPage := .NextInSection }}
 <!DOCTYPE html>
 <html lang="en">
 {{ partial "head.html" . }}
 
 <body>
-  <article class="post {{ .Site.Language.LanguageName }}" id="article">
+  <article
+    class="post {{ .Site.Language.LanguageName }}"
+    id="article"
+    {{ with $prevPage }}data-shortcut-prev="{{ .RelPermalink }}"{{ end }}
+    {{ with $nextPage }}data-shortcut-next="{{ .RelPermalink }}"{{ end }}>
     <div class="row">
       <div class="col-xs-12">
         <div class="site-header">
@@ -31,16 +37,16 @@
           {{ end }}
         </header>
 
-        {{ if .TableOfContents }}
+        {{ $toc := .TableOfContents }}
+        {{ if gt (len (findRE "<li>" $toc)) 0 }}
         <aside class="toc" id="toc">
-          <details open>
-            <summary>目录</summary>
-            {{ .TableOfContents }}
-          </details>
+          <div class="toc-title">目录</div>
+          <div class="toc-divider"></div>
+          {{ $toc }}
         </aside>
         {{ end }}
 
-        <div class="post-content markdown-body">
+        <div class="post-content markdown-body" id="post-content">
           {{ .Site.Params.postHeaderContent | safeHTML }}
           {{ .Content }}
         </div>

@@ -163,6 +163,94 @@ a:hover {
   opacity: 1;
 }
 
+.shortcut-overlay[hidden] {
+  display: none;
+}
+
+.shortcut-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: color-mix(in srgb, var(--bg-color) 70%, transparent);
+  backdrop-filter: blur(2px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.shortcut-panel {
+  width: min(420px, 100%);
+  border: 1px solid var(--border-color);
+  background: var(--bg-color);
+  color: var(--text-color);
+  padding: 18px 20px;
+  box-sizing: border-box;
+}
+
+.shortcut-title {
+  font-family: var(--font-title);
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.shortcut-subtitle {
+  color: var(--secondary-text);
+  font-size: 0.9rem;
+  margin-bottom: 14px;
+}
+
+.shortcut-divider {
+  border-top: 1px solid var(--border-color);
+  margin-bottom: 14px;
+}
+
+.shortcut-list {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 10px 16px;
+  align-items: baseline;
+}
+
+.shortcut-list > [hidden] {
+  display: none;
+}
+
+.shortcut-key {
+  min-width: 64px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-color);
+}
+
+.shortcut-desc {
+  color: var(--secondary-text);
+  font-size: 0.95rem;
+}
+
+.shortcut-hint {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 999;
+  border: 1px solid var(--border-color);
+  background: var(--bg-color);
+  color: var(--secondary-text);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.85rem;
+  line-height: 1;
+  padding: 8px 10px;
+  cursor: pointer;
+  opacity: 0.78;
+}
+
+.shortcut-hint:hover {
+  color: var(--text-color);
+  opacity: 1;
+}
+
 /* posts list */
 
 #posts-list {
@@ -260,6 +348,12 @@ a:hover {
   margin-top: 6px;
 }
 
+.post-content .katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.2rem 0;
+}
+
 .post-content .post-gallery {
   display: flex;
   flex-wrap: wrap;
@@ -298,10 +392,15 @@ a:hover {
   line-height: 1.6;
 }
 
-.toc details summary {
+.toc-title {
   font-weight: 600;
-  cursor: pointer;
   margin-bottom: 8px;
+}
+
+.toc-divider {
+  width: 100%;
+  border-top: 1px solid var(--border-color);
+  margin-bottom: 10px;
 }
 
 .toc nav#TableOfContents ul {

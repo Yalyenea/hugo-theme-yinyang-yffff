@@ -2,7 +2,7 @@
 {{ if and $giscus $giscus.enabled $giscus.repo $giscus.repoId $giscus.category $giscus.categoryId }}
   {{ $lang := or $giscus.lang .Site.Language.Lang }}
   {{ if eq $lang "cn" }}{{ $lang = "zh-CN" }}{{ end }}
-  <div class="post-comments">
+  <div class="post-comments" id="post-comments">
     <div id="giscus"></div>
     <script>
       (function () {
