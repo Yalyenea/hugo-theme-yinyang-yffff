@@ -1,57 +1,104 @@
-# YinYang
+# yinyang-my-fork
 
-[YinYang](https://en.wikipedia.org/wiki/Yin_and_yang) is a black-white theme for [Hugo](https://gohugo.io/).
+`yinyang-my-fork` is a Hugo theme forked from [joway/hugo-theme-yinyang](https://github.com/joway/hugo-theme-yinyang) and tailored for a personal writing blog.
 
-[**Demo**](https://blog.joway.io)
+It keeps the original minimalist direction, but this fork has already diverged in behavior and should be treated as its own maintained variant.
 
-## Feature
+## What This Fork Adds
 
-- minimalist
-- multi-language support
-- [disqus](https://disqus.com) support
-- [SEO Optimization](https://github.com/joway/hugo-theme-yinyang/blob/master/layouts/partials/seo.html)
+- Minimal light/dark theme toggle with a simplified `◐` button
+- System font stack by default, without external font dependency
+- Fingerprinted external CSS bundle for better browser caching
+- Native lazy loading for Markdown images and gallery images
+- `giscus` comments instead of Disqus
+- KaTeX rendering with Obsidian-friendly `$...$` and `$$...$$` delimiters
+- Table of contents shown only when the article actually has headings
+- Built-in reading shortcuts with a Vim-style help overlay
+- Theme and `giscus` color scheme kept in sync
 
-## Screenshot
+## Current Shortcut Keys
 
-![](./images/screenshot.png)
+- `?`: open or close shortcut help
+- `j` / `k`: scroll down or up
+- `d` / `u`: half-page down or up
+- `gg`: jump to top
+- `Shift + g`: jump to bottom
+- `t`: jump to article content
+- `c`: jump to comments
+- `[`: previous post
+- `]`: next post
+- `s`: toggle theme
+- `Esc`: close shortcut help
 
 ## Installation
 
-From the root of your site:
+From the root of your Hugo site:
 
-```shell
-git submodule add https://github.com/joway/hugo-theme-yinyang.git themes/yinyang
+```bash
+git submodule add git@github.com:Yalyenea/hugo-theme-yinyang-yffff.git themes/yinyang-my-fork
 ```
 
-Change `config.toml`:
+Then set the theme in your site config:
 
 ```toml
-theme = "yinyang"
+theme = "yinyang-my-fork"
 ```
 
-## Configuration
+## Minimal Configuration
 
-### Head Title
+```toml
+baseURL = "https://example.com/"
+languageCode = "en-us"
+title = "My Blog"
+theme = "yinyang-my-fork"
+DefaultContentLanguage = "en"
 
-```
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+
+[languages]
+  [languages.en]
+    contentDir = "content/en"
+    languageName = "English"
+    weight = 1
+
 [params]
-headTitle = "Joway Wang"
+  description = "A minimal Hugo blog"
+  headTitle = "My Blog"
+  mainSections = ["posts"]
+  postHeaderContent = ""
+  postFooterContent = ""
+  extraCSSFiles = []
+  extraHead = ""
+  extraBody = ""
+  favicon = "/favicon.ico"
+  staticPrefix = ""
+
+  [params.author]
+    name = "Your Name"
+    homepage = "https://example.com"
+
+[[params.socials]]
+name = "GitHub"
+link = "https://github.com/yourname"
 ```
 
-If there is no `headTitle` in params, use `.Site.Params.author.name`.
+## Recommended Content Settings
 
-### Main section
+The theme expects standard Hugo Markdown rendering with unsafe HTML enabled:
 
-Set your main section:
-
+```toml
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
 ```
-[params]
-mainSections = ["posts"]
-```
 
-### Multi-Language
+If you use multiple languages, configure them in the usual Hugo way:
 
-```
+```toml
 [languages]
   [languages.en]
     contentDir = "content/en"
@@ -63,135 +110,143 @@ mainSections = ["posts"]
     weight = 2
 ```
 
-Then your posts files should be put into `content/en` or `content/cn`.
+## Theme Parameters
 
-### Footer
+### Core
 
+- `params.headTitle`: site title shown in the header
+- `params.description`: subtitle shown below the title
+- `params.mainSections`: content sections treated as posts
+- `params.favicon`: favicon path
+- `params.staticPrefix`: optional CDN/static prefix
+
+If `headTitle` is not set, the theme falls back to `params.author.name`.
+
+### Header / Footer Injection
+
+- `params.postHeaderContent`: HTML inserted before article content
+- `params.postFooterContent`: HTML inserted after article content
+- `params.extraHead`: extra HTML injected into `<head>`
+- `params.extraBody`: extra HTML injected before `</body>`
+
+### Extra Styles
+
+```toml
+[params]
+extraCSSFiles = ["css/custom.css"]
 ```
+
+### Social Links
+
+```toml
 [[params.socials]]
-name = "About Me"
-link = "https://joway.io"
-[[params.socials]]
-name = "Github"
-link = "https://github.com/joway"
+name = "RSS"
+link = "/index.xml"
 ```
 
-### Extra Head
+### Author
 
-```
-[params]
-extraHead = '<script src="xxxx.js"></script>'
-```
-
-### Extra CSS files
-
-```
-[params]
-extraCSSFiles = ["css/foo.css", "css/bar.css"]
-```
-
-### Twitter Cards
-
-Add the following setting:
-
-```
-[params]
-twitterCards = true
-```
-
-In a post's front matter, include a keyword `images` with a value of a list of
-URLs of images that will be used for Twitter Cards.
-
-### Insert content on every post
-
-```
-[params]
-postHeaderContent = ""
-postFooterContent = "<br/><br/><p>Subscribe：<a target='_blank' href='https://mailchi.mp/a1a0d59e7a19/joway'>Joway's Blog</a></p>"
-```
-
-### Example
-
-```
-DefaultContentLanguage = "cn"
-baseURL = "https://blog.joway.io/"
-canonifyURLs = false
-enableRobotsTXT = true
-languageCode = "en-us"
-theme = "yinyang"
-title = "Random Thoughts"
-
-# [related]
-# includeNewer = true
-# threshold = 80
-# toLower = false
-# [[related.indices]]
-# name = "date"
-# weight = 100
-# [[related.indices]]
-# name = "keywords"
-# weight = 100
-
-[markup]
-[markup.goldmark]
-[markup.goldmark.renderer]
-unsafe = true
-[markup.highlight]
-guessSyntax = true
-noClasses = false
-style = "tango"
-tabWidth = 2
-
-[languages]
-# [languages.en]
-#   contentDir = "content/en"
-#   languageName = "English"
-#   weight = 1
-[languages.cn]
-contentDir = "content/cn"
-languageName = "简体中文"
-weight = 2
-
-[permalinks]
-post = "/blog/:title/"
-
-[params]
-description = "Log something useless, but interesting." 
-disqus = "joway" # disqus account name
-extraHead = '<script async src="https://www.googletagmanager.com/gtag/js?id=UA-53624533-8"></script><script src="https://cdn.jsdelivr.net/gh/joway/homepage/analytics.js"></script>' 
-favicon = "/logo.png" 
-headTitle = "Random Thoughts" 
-mainSections = ["posts"] 
-postFooterContent = '<br/><br/><p>Subscribe：<a target="_blank" href="https://mailchi.mp/a1a0d59e7a19/joway"><b>Mailchimp</b></a></p><br/><a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://blog.joway.io/images/cc.png" /></a>' 
-postHeaderContent = "" 
-staticPrefix = "https://cdn.jsdelivr.net/gh/joway/blog" 
-# extraBody = '<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>'
-# postAds = '<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6400651395935595" data-ad-slot="5705651853" data-ad-format="auto" data-full-width-responsive="true"></ins>'
-lazyImage = true
-
+```toml
 [params.author]
-homepage = "https://joway.io/"
-name = "Joway"
-
-# [[params.socials]]
-# name = "Telegram"
-# link = "https://t.me/biosthinking"
-
-# [[params.socials]]
-# name = "RSS"
-# link = "/index.xml"
-
-# [[params.socials]]
-# name = "Slides"
-# link = "/presentations"
-
-[[params.socials]]
-link = "https://mailchi.mp/a1a0d59e7a19/joway"
-name = "Subscribe"
-[[params.socials]]
-link = "/travel"
-name = "Travel"
-[[params.socials]]
-link = "https://joway.io"
-name = "About"
+name = "Your Name"
+homepage = "https://example.com"
 ```
+
+## Comments With giscus
+
+This fork supports `giscus` out of the box.
+
+Example:
+
+```toml
+[params.giscus]
+enabled = true
+repo = "owner/repo"
+repoId = "YOUR_REPO_ID"
+category = "General"
+categoryId = "YOUR_CATEGORY_ID"
+mapping = "pathname"
+strict = "0"
+reactionsEnabled = "1"
+emitMetadata = "0"
+inputPosition = "top"
+lang = "en"
+themeLight = "light"
+themeDark = "dark"
+```
+
+Required fields:
+
+- `enabled`
+- `repo`
+- `repoId`
+- `category`
+- `categoryId`
+
+The theme automatically keeps the embedded `giscus` theme aligned with the site light/dark mode.
+
+## Math With KaTeX
+
+Math is loaded only when enabled for the current page or globally in site params.
+
+Per page front matter:
+
+```toml
+math = true
+```
+
+Legacy compatibility is also kept:
+
+```toml
+mathjax = true
+```
+
+Supported delimiters:
+
+- `$...$`
+- `$$...$$`
+- `\(...\)`
+- `\[...\]`
+
+This makes the theme work well with Obsidian-style writing.
+
+## Table Of Contents
+
+The single post template renders a TOC only when the generated table of contents actually contains headings.
+
+Behavior in this fork:
+
+- no fold triangle
+- visible by default
+- divider shown under the TOC title
+
+## Images
+
+Markdown images are rendered with:
+
+- `loading="lazy"`
+- `decoding="async"`
+
+This applies to the render hook in [`layouts/_markup/render-image.html`](layouts/_markup/render-image.html).
+
+## Structure
+
+Important files in this fork:
+
+- [`theme.toml`](theme.toml)
+- [`layouts/partials/head.html`](layouts/partials/head.html)
+- [`layouts/partials/header.html`](layouts/partials/header.html)
+- [`layouts/partials/giscus.html`](layouts/partials/giscus.html)
+- [`layouts/partials/scripts.html`](layouts/partials/scripts.html)
+- [`layouts/_default/single.html`](layouts/_default/single.html)
+- [`assets/css/index.css`](assets/css/index.css)
+
+## Notes
+
+- The header currently includes fixed links to `/posts/` and `/weekly/`
+- The theme is optimized around a personal blog rather than a fully generic Hugo distribution
+- If you want to publish this as a reusable public theme, the next cleanup step should be making navigation configurable instead of hardcoded
+
+## License
+
+MIT. See [`LICENSE.md`](LICENSE.md).
